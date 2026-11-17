@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepalive dashboard</title>
+<meta name="description" content="See which community-critical open-source tools need a maintainer first.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Keepalive</h1>
+    <p class="lede">Which community tools need a maintainer first?</p>
+  </div>
+  <div class="load">
+    <span id="source" class="source" role="status"></span>
+    <label class="btn">Load report.csv<input id="file" type="file" accept=".csv,text/csv" hidden></label>
+    <button class="btn ghost" id="reset" type="button">Use sample data</button>
+  </div>
+</header>
+
+<main>
+  <section id="stats" class="stats" aria-label="Summary"></section>
+
+  <div class="grid">
+    <section class="panel" aria-labelledby="mapTitle">
+      <h2 id="mapTitle">Reliance against neglect</h2>
+      <p class="hint">Tools in the shaded corner are relied on by many people and have gone quiet. Select a dot to see why.</p>
+      <div id="chart"></div>
+    </section>
+    <aside class="panel detail" id="detail" aria-live="polite"></aside>
+  </div>
+
+  <section class="panel" aria-labelledby="listTitle">
+    <h2 id="listTitle">All tools</h2>
+    <div class="controls">
+      <input id="q" type="search" placeholder="Search by name" aria-label="Search by name">
+      <select id="domain" aria-label="Filter by domain"></select>
+      <label class="check"><input id="only" type="checkbox"> Needs a keeper only</label>
+      <span id="count" class="count"></span>
+    </div>
+    <div class="tablewrap">
+      <table id="table">
+        <thead><tr>
+          <th data-k="full_name">Tool</th><th data-k="domain">Domain</th>
+          <th data-k="priority" class="num">Priority</th><th data-k="decay" class="num">Neglect</th>
+          <th data-k="dependence" class="num">Reliance</th><th data-k="days_since_push" class="num">Days since update</th>
+          <th data-k="known_deployments" class="num">Known sites</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Scores are screening signals. A high priority means a person should look, not that a project is abandoned.
+  Method: see <code>docs/METHODOLOGY.md</code> in the Keepalive repository. Everything runs in your browser; no data leaves this page.</p>
+</footer>
+
+<script src="sample-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
